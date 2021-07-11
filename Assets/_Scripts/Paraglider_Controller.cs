@@ -5,8 +5,10 @@ using BNG;
 namespace Lighthouse{
 	public class Paraglider_Controller : MonoBehaviour
 	{
-		public Wing_Controller left_wing_controller;
-		public Wing_Controller right_wing_controller;
+		public Wing_Controller leftWingHolder;
+		public Wing_Controller rightWingHolder;
+		public Vector3 leftWingPos;
+		public Vector3 rightWingPos;
 
 		private void Start()
 		{
@@ -15,7 +17,15 @@ namespace Lighthouse{
 		}
 		public IEnumerator MoveRoutine(){
 			while(true){
-				transform.position += Vector3.forward * Time.deltaTime;
+				rightWingPos = rightWingHolder.holderPosition;
+				leftWingPos = leftWingHolder.holderPosition;
+
+				//If both left and right wings are 0,0,0, it should go front
+				//If right wing are 0,y!=0,0 and left wing is 0,0,0 it should go right
+				//If left wing are 0,y!=0,0 and right wing is 0,0,0 it should go left
+
+				Debug.Log(leftWingPos - rightWingPos);
+
 				yield return null;
 			}
 		}
