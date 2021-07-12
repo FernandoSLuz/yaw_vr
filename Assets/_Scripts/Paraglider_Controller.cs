@@ -45,11 +45,9 @@ namespace Lighthouse{
 				//leftWingPos = Vector3.ClampMagnitude(leftWingPos, 8);
 
 
-				float wingMovement = -(leftWingPos.magnitude / 10) + rightWingPos.magnitude / 10;
+				float targetWingMovement = -(leftWingPos.magnitude / 10) + rightWingPos.magnitude / 10;
 
-				if (wingMovement >= 0.8) wingMovement = 0.8f;
-				else if (wingMovement <= -0.8) wingMovement = -0.8f;
-				Debug.Log(wingMovement);
+				targetWingMovement = Mathf.Clamp(targetWingMovement, -8, 8);
 
 				//If both left and right wings are 0,0,0, it should go front
 				//If right wing are 0,y!=0,0 and left wing is 0,0,0 it should go right
@@ -57,8 +55,8 @@ namespace Lighthouse{
 
 				//wing movement must be smoothDamped
 
-				YRotation += wingMovement * Time.deltaTime * yRotationVelocity;
-				t.rotation = Quaternion.Euler(0, YRotation, -wingMovement * ZRotationLimit);
+				YRotation += targetWingMovement * Time.deltaTime * yRotationVelocity;
+				t.rotation = Quaternion.Euler(0, YRotation, -targetWingMovement * ZRotationLimit);
 				t.position += (t.forward * Time.deltaTime * forwardVelocity);
 				//yawController.TrackerObject.SetRotation(transform.localEulerAngles);
 				yield return null;
