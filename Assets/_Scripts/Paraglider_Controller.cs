@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BNG;
+using YawVR;
+using System.Net;
 namespace Lighthouse{
 	public class Paraglider_Controller : MonoBehaviour
 	{
@@ -16,14 +18,25 @@ namespace Lighthouse{
 
 		Transform t;
 		float YRotation = 0;
+		public YawController yawController; // reference to YawController
 
-		private void Start()
+		private IEnumerator Start()
 		{
 			t = transform;
 			StartCoroutine(MoveRoutine());
-			
+			yield return new WaitForSeconds(1.0f);
+			yawController = YawController.Instance();
+			yawController.ConnectToDevice(new YawDevice(IPAddress.Parse("192.168.0.12"), 50020, 50010, "001", "DEBUG", DeviceStatus.Available),
+					() =>{Debug.Log("Sucesso");}, (error) => { Debug.Log(error); }
+					);
 		}
+		private void Update()
+		{
+			Debug.Log(yawController.State);
+		}
+
 		public IEnumerator MoveRoutine(){
+			yield return new WaitForSeconds(5.0f);
 			while(true){
 				rightWingPos = rightWingHolder.holderPosition;
 				leftWingPos = leftWingHolder.holderPosition;
@@ -47,8 +60,13 @@ namespace Lighthouse{
 				YRotation += wingMovement * Time.deltaTime * yRotationVelocity;
 				t.rotation = Quaternion.Euler(0, YRotation, -wingMovement * ZRotationLimit);
 				t.position += (t.forward * Time.deltaTime * forwardVelocity);
+				//yawController.TrackerObject.SetRotation(transform.localEulerAngles);
 				yield return null;
 			}
+		}
+		private void FixedUpdate()
+		{
+			yawController.TrackerObject.SetRotation(transform.localEulerAngles);
 		}
 	}
 }
