@@ -5,6 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 1
+    path: Assets/_Scenes/Gaia.unity
+    guid: 6a1b796757e5c2149b797f22c0c1de6f
   - enabled: 0
     path: Assets/_Scenes/XR Demo.unity
     guid: c4ce790c82759cb4d9cf0dd5079af84e
