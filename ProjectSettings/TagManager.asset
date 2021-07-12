@@ -3,13 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - PW - Nature
-  - PW - Prop
-  - PW - Building
-  - Synty Medium Farm
-  - Synty Small Farm
-  - Synty Tree
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -22,10 +16,10 @@ TagManager:
   - Restricted
   - Player
   - Grabbable
-  - PW_VFX
-  - PW_Object_Small
-  - PW_Object_Medium
-  - PW_Object_Large
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
