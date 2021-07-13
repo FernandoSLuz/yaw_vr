@@ -8,8 +8,7 @@ namespace Lighthouse
 {
 	public class Paraglider_Controller : MonoBehaviour
 	{
-		public Wing_Controller leftWingHolder;
-		public Wing_Controller rightWingHolder;
+		public Wing_Controller[] wingsHolders;
 		public Vector3 leftWingPos;
 		public Vector3 rightWingPos;
 
@@ -36,24 +35,20 @@ namespace Lighthouse
 					() => { Debug.Log("Sucesso"); }, (error) => { Debug.Log(error); }
 					);
 		}
-		private void Update()
-		{
-			//Debug.Log(yawController.State);
-		}
 
 		public IEnumerator MoveRoutine()
 		{
 			yield return new WaitForSeconds(5.0f);
 			float currentWingPosition = 0;
 			float currentRotation = 0;
+			WaitForFixedUpdate update = new WaitForFixedUpdate();
 			while (true)
 			{
-				rightWingPos = rightWingHolder.holderPosition;
-				leftWingPos = leftWingHolder.holderPosition;
+				rightWingPos = wingsHolders[1].holderPosition;
+				leftWingPos = wingsHolders[0].holderPosition;
 
 				//rightWingPos = Vector3.ClampMagnitude(rightWingPos, 8);
 				//leftWingPos = Vector3.ClampMagnitude(leftWingPos, 8);
-
 
 				float targetWingMovement = -(leftWingPos.magnitude / 10) + rightWingPos.magnitude / 10;
 
@@ -71,13 +66,9 @@ namespace Lighthouse
 				YRotation += currentWingPosition * Time.deltaTime * yRotationVelocity;
 				t.rotation = Quaternion.Euler(0, YRotation, currentRotation);
 				t.position += (t.forward * Time.deltaTime * forwardVelocity);
-				//yawController.TrackerObject.SetRotation(transform.localEulerAngles);
-				yield return null;
+				yawController.TrackerObject.SetRotation(t.localEulerAngles);
+				yield return update;
 			}
-		}
-		private void FixedUpdate()
-		{
-			yawController.TrackerObject.SetRotation(transform.localEulerAngles);
 		}
 	}
 }
