@@ -9,7 +9,7 @@ namespace Lighthouse{
         public RingState ringState;
 		private void Start()
 		{
-            StartCoroutine(LoopLookAt());
+            //StartCoroutine(LoopLookAt());
 		}
 		private void OnTriggerEnter(Collider other)
 		{
@@ -17,8 +17,9 @@ namespace Lighthouse{
                 Ring_Manager.instance.RingCaught(this);
             }
 		}
+        /*
         public IEnumerator LoopLookAt(){
-            var target = GameObject.FindGameObjectWithTag("Player").transform;
+            /*var target = GameObject.FindGameObjectWithTag("Player").transform;
             while(true){
 
                 Vector3 targetPostition = new Vector3(target.position.x,
@@ -28,8 +29,9 @@ namespace Lighthouse{
 
                 yield return null;
             }
+            yield retun null;
         }
-
+        */
 		[System.Serializable]
         public enum RingState{ 
             qeued,
