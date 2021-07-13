@@ -11,9 +11,6 @@ namespace YawVR {
         [SerializeField]
         private YawController yawController;
 
-
-
-        
         private Vector3 IMU;
 
         private Vector3 offset;
@@ -25,13 +22,16 @@ namespace YawVR {
         public void UpdateOffset() {
             offset.y = IMU.y;
         }
+
         private void Update() {
             if (YawController.Instance().State == ControllerState.Started ||
-                 YawController.Instance().State == ControllerState.Connected) {
+                                YawController.Instance().State == ControllerState.Connected)
+            {
                 IMU.y = -yawController.Device.ActualPosition.yaw;
 
-                if (cameraOffsetTransform != null) {
-                    cameraOffsetTransform.localEulerAngles = IMU - offset;   
+                if (cameraOffsetTransform != null)
+                {
+                    cameraOffsetTransform.localEulerAngles = IMU - offset;
                 }
             }
         }
