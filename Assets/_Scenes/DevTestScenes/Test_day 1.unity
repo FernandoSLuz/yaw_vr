@@ -30954,6 +30954,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8689607169603698858, guid: 99589bed9c4ab2045a0893a155d660dd,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689607169603698858, guid: 99589bed9c4ab2045a0893a155d660dd,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689607169603698858, guid: 99589bed9c4ab2045a0893a155d660dd,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6288968286487491989}
+    - target: {fileID: 8689607169603698858, guid: 99589bed9c4ab2045a0893a155d660dd,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689607169603698858, guid: 99589bed9c4ab2045a0893a155d660dd,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ControlSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689607169603698858, guid: 99589bed9c4ab2045a0893a155d660dd,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Lighthouse.Paraglider_Controller, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689607169603698858, guid: 99589bed9c4ab2045a0893a155d660dd,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8689607169603698858, guid: 99589bed9c4ab2045a0893a155d660dd,
+        type: 3}
+      propertyPath: onTrigger.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99589bed9c4ab2045a0893a155d660dd, type: 3}
 --- !u!136 &3446837912696626408
@@ -53725,7 +53765,7 @@ MonoBehaviour:
   forwardVelocity: 0
   forwardAcceleration: 2
   forwardDeceleration: 2
-  forwardVelocityConstraints: {x: 1, y: 1}
+  forwardVelocityConstraints: {x: 3.5, y: 8}
   velocity: 2
   rotVelocity: 2
   smooth: 2
