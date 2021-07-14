@@ -15,6 +15,9 @@ namespace Lighthouse
 		public float yRotationVelocity = 8;
 		public float ZRotationLimit = 40;
 		public float forwardVelocity = 3.5f;
+		public float forwardAcceleration = 2f;
+		public float forwardDeceleration = 2f;
+		public Vector2 forwardVelocityConstraints = Vector2.one;
 
 		Transform t;
 		float YRotation = 0;
@@ -53,10 +56,12 @@ namespace Lighthouse
 				leftWingPos = wingsHolders[0].holderPosition;
 
 				float targetWingMovement = -(leftWingPos.magnitude / 10) + rightWingPos.magnitude / 10;
-
+				
 				targetWingMovement = Mathf.Clamp(targetWingMovement, -8, 8);
 				currentWingPosition = Mathf.SmoothDamp(currentWingPosition, targetWingMovement, ref velocity, Time.deltaTime, smooth);
 
+				forwardVelocity -= Time.deltaTime * forwardDeceleration;
+				forwardVelocity = Mathf.Clamp(forwardVelocity, forwardVelocityConstraints.x, forwardVelocityConstraints.y);
 				//wing movement must be smoothDamped
 				float targetRotation = -currentWingPosition * ZRotationLimit;
 				currentRotation = Mathf.SmoothDamp(currentRotation, -currentWingPosition * ZRotationLimit, ref rotVelocity,
@@ -68,6 +73,11 @@ namespace Lighthouse
 				yawController.TrackerObject.SetRotation(t.localEulerAngles);
 				yield return update;
 			}
+		}
+
+		public void ControlSpeed(float change)
+        {
+			forwardVelocity += change * Time.deltaTime * forwardAcceleration;
 		}
 	}
 }
