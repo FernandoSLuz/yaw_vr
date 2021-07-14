@@ -15,6 +15,9 @@ namespace Lighthouse
 		public float yRotationVelocity = 8;
 		public float ZRotationLimit = 40;
 		public float forwardVelocity = 3.5f;
+		public float forwardAcceleration = 2f;
+		public float forwardDeceleration = 2f;
+		public Vector2 forwardVelocityConstraints = Vector2.one;
 
 		Transform t;
 		float YRotation = 0;
@@ -24,21 +27,26 @@ namespace Lighthouse
 		public float rotationSmooth = 1;
 		public YawController yawController; // reference to YawController
 		public AnimationCurve curve;
+		public Transform positioner;
+		public Transform model;
 
-		private IEnumerator Start()
+		private void Start()
 		{
+			
 			t = transform;
-			StartCoroutine(MoveRoutine());
-			yield return new WaitForSeconds(1.0f);
+			// Assign the instance to the yaw controller, and try to connect
 			yawController = YawController.Instance();
 			yawController.ConnectToDevice(new YawDevice(IPAddress.Parse("192.168.0.12"), 50020, 50010, "001", "DEBUG", DeviceStatus.Available),
 					() => { Debug.Log("Sucesso"); }, (error) => { Debug.Log(error); }
 					);
+			StartCoroutine(MoveRoutine());
 		}
 
 		public IEnumerator MoveRoutine()
 		{
-			yield return new WaitForSeconds(5.0f);
+			// wait until the connection is done and the instance not null
+			yield return new WaitUntil(() => yawController != null);
+			yield return new WaitUntil(() => yawController.State == ControllerState.Connected);
 			float currentWingPosition = 0;
 			float currentRotation = 0;
 			WaitForFixedUpdate update = new WaitForFixedUpdate();
@@ -47,17 +55,13 @@ namespace Lighthouse
 				rightWingPos = wingsHolders[1].holderPosition;
 				leftWingPos = wingsHolders[0].holderPosition;
 
-				//rightWingPos = Vector3.ClampMagnitude(rightWingPos, 8);
-				//leftWingPos = Vector3.ClampMagnitude(leftWingPos, 8);
-
 				float targetWingMovement = -(leftWingPos.magnitude / 10) + rightWingPos.magnitude / 10;
-
+				
 				targetWingMovement = Mathf.Clamp(targetWingMovement, -8, 8);
 				currentWingPosition = Mathf.SmoothDamp(currentWingPosition, targetWingMovement, ref velocity, Time.deltaTime, smooth);
-				//If both left and right wings are 0,0,0, it should go front
-				//If right wing are 0,y!=0,0 and left wing is 0,0,0 it should go right
-				//If left wing are 0,y!=0,0 and right wing is 0,0,0 it should go left
 
+				forwardVelocity -= Time.deltaTime * forwardDeceleration;
+				forwardVelocity = Mathf.Clamp(forwardVelocity, forwardVelocityConstraints.x, forwardVelocityConstraints.y);
 				//wing movement must be smoothDamped
 				float targetRotation = -currentWingPosition * ZRotationLimit;
 				currentRotation = Mathf.SmoothDamp(currentRotation, -currentWingPosition * ZRotationLimit, ref rotVelocity,
@@ -69,6 +73,11 @@ namespace Lighthouse
 				yawController.TrackerObject.SetRotation(t.localEulerAngles);
 				yield return update;
 			}
+		}
+
+		public void ControlSpeed(float change)
+        {
+			forwardVelocity += change * Time.deltaTime * forwardAcceleration;
 		}
 	}
 }
