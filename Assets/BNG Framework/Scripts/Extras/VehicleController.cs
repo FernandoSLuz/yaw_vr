@@ -136,7 +136,8 @@ namespace BNG {
 
         public virtual void GetTorqueInputFromTriggers() {
             // Right Trigger Accelerate, Left Trigger Brake
-            if(isHoldingSteering) {
+            //Debug.Log(InputBridge.Instance.RightTrigger + " - " + InputBridge.Instance.LeftTrigger);
+            if (isHoldingSteering) {
                 SetMotorTorqueInput(InputBridge.Instance.RightTrigger - InputBridge.Instance.LeftTrigger);
             }
             // Nothing Holding the steering wheel. Set torque to 0
