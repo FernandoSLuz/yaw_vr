@@ -14,7 +14,7 @@ public class TriggerAnimation : MonoBehaviour
 
     private void Start()
     {
-        startRot = Quaternion.Euler(Vector3.zero);
+        startRot = Quaternion.Euler(trigger.eulerAngles);
         StartCoroutine(AnimateTrigger());
     }
 
