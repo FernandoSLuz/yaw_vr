@@ -55,6 +55,7 @@ namespace BNG {
         private float _prevThumb;
 
         public int PoseId;
+        public TriggerAnimation triggerAnim;
 
         ControllerOffsetHelper offset;
         InputBridge input;
@@ -202,6 +203,8 @@ namespace BNG {
         /// </summary>
         public virtual void UpdateFromInputs() {
             Lighthouse.Paraglider_Controller.instance.ControlSpeed(input.RightTrigger);
+            if(triggerAnim.input != null)
+            triggerAnim.input = input.RightTrigger;
             // Grabber may have been deactivated
             if (grabber == null || !grabber.isActiveAndEnabled) {
                 grabber = GetComponentInChildren<Grabber>();
