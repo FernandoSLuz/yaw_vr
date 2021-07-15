@@ -14,7 +14,6 @@ public class Point2Point : MonoBehaviour
 	}
 	public IEnumerator changeLineRendererPos(){
         while(true){
-			Debug.Log("Ola");
 			var positions = new Vector3[2];
 			positions[0] = pointA.position;
 			positions[1] = pointB.position;
