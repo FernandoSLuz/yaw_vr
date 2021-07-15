@@ -203,8 +203,8 @@ namespace BNG {
         /// </summary>
         public virtual void UpdateFromInputs() {
             Lighthouse.Paraglider_Controller.instance.ControlSpeed(input.RightTrigger);
-            if(triggerAnim.input != null)
-            triggerAnim.input = input.RightTrigger;
+            if(triggerAnim != null)
+                triggerAnim.input = input.RightTrigger;
             // Grabber may have been deactivated
             if (grabber == null || !grabber.isActiveAndEnabled) {
                 grabber = GetComponentInChildren<Grabber>();
