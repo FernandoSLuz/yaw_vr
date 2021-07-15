@@ -253,7 +253,6 @@ namespace BNG {
 
         public virtual void UpdateAnimimationStates()
         {
-
             if(DoUpdateAnimationStates == false) {
                 return;
             }
