@@ -30,9 +30,13 @@ namespace Lighthouse
 		public Transform positioner;
 		public Transform model;
 
+		public static Paraglider_Controller instance;
+		private void Awake()
+		{
+			instance = this;
+		}
 		private void Start()
 		{
-			
 			t = transform;
 			// Assign the instance to the yaw controller, and try to connect
 			yawController = YawController.Instance();
@@ -77,6 +81,7 @@ namespace Lighthouse
 
 		public void ControlSpeed(float change)
         {
+			change *= forwardVelocityConstraints.y;
 			forwardVelocity += change * Time.deltaTime * forwardAcceleration;
 		}
 	}
