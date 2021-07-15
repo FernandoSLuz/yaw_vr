@@ -81,8 +81,7 @@ namespace Lighthouse
 
 		public void ControlSpeed(float change)
         {
-			Debug.Log(change);
-			change = change * forwardVelocityConstraints.y;
+			change *= forwardVelocityConstraints.y;
 			forwardVelocity += change * Time.deltaTime * forwardAcceleration;
 		}
 	}
