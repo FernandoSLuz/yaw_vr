@@ -9,6 +9,14 @@ namespace BNG {
     /// </summary>
     public class HandController : MonoBehaviour {
 
+
+        public SceneState sceneState;
+        [System.Serializable]
+        public enum SceneState{ 
+            paraglider,
+            turret
+        }
+
         [Tooltip("HandController parent will be set to this on Start if specified")]
         public Transform HandAnchor;
 
@@ -55,6 +63,7 @@ namespace BNG {
         private float _prevThumb;
 
         public int PoseId;
+        public TriggerAnimation triggerAnim;
 
         ControllerOffsetHelper offset;
         InputBridge input;
@@ -201,7 +210,10 @@ namespace BNG {
         /// Update GripAmount, PointAmount, and ThumbAmount based raw input from InputBridge
         /// </summary>
         public virtual void UpdateFromInputs() {
-            Lighthouse.Paraglider_Controller.instance.ControlSpeed(input.RightTrigger);
+            
+            if(sceneState == SceneState.paraglider)Lighthouse.Paraglider_Controller.instance.ControlSpeed(input.RightTrigger);
+            if(triggerAnim != null)
+                triggerAnim.input = input.RightTrigger;
             // Grabber may have been deactivated
             if (grabber == null || !grabber.isActiveAndEnabled) {
                 grabber = GetComponentInChildren<Grabber>();
@@ -250,7 +262,6 @@ namespace BNG {
 
         public virtual void UpdateAnimimationStates()
         {
-
             if(DoUpdateAnimationStates == false) {
                 return;
             }
